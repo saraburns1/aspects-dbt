@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_instance_courses
+  - name: fact_instance
     description: "A materialized view summarizing site-wide course activity"
     columns:
       - name: emission_hour
@@ -10,23 +10,9 @@ models:
       - name: courses_cnt
         data_type: Int
         description: "The number of xAPI courses active in the given hour"
-
-  - name: fact_instance_events
-    description: "A materialized view summarizing site-wide xAPI event activity"
-    columns:
-      - name: emission_day
-        data_type: DateTime
-        description: "Time of summary, truncated to the day"
       - name: events_cnt
         data_type: Int
         description: "The number of xAPI events that occurred in the given hour"
-
-  - name: fact_instance_actors
-    description: "A materialized view summarizing site-wide user activity"
-    columns:
-      - name: emission_day
-        data_type: DateTime
-        description: "Time of summary, truncated to the day"
       - name: actors_cnt
         data_type: Int
         description: "The number of xAPI actors active in the given hour"
