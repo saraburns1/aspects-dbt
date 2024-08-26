@@ -10,8 +10,8 @@ select
     as subsection_number,
     splitByString(' - ', blocks.display_name_with_location)[1] as hierarchy_location,
     blocks.display_name_with_location as display_name_with_location,
-    course_order,
-    graded,
+    blocks.course_order,
+    blocks.graded,
     case
         when block_id like '%@chapter+block@%'
         then 'section'
@@ -21,5 +21,5 @@ select
         then 'unit'
         else regexpExtract(block_id, '@([^+]+)\+block@', 1)
     end as block_type
-from {{ ref("course_block_names") }} blocks
+from {{ ref("most_recent_course_blocks") }} blocks
 join {{ ref("course_names") }} courses on blocks.course_key = courses.course_key

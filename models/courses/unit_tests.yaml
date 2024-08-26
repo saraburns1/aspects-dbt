@@ -31,10 +31,10 @@ unit_tests:
     config: 
       tags: 'dim'
     given:
-      - input: ref('course_block_names')
+      - input: ref('most_recent_course_blocks')
         format: sql
         rows: |
-          select * from course_block_names
+          select * from most_recent_course_blocks
       - input: ref('course_names')
         format: sql
         rows: |
