@@ -1,6 +1,5 @@
 select
     mot.name taxonomy_name,
-    mrot._value _value,
     mrot.object_id object_id,
     mrot.lineage lineage,
     trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag
