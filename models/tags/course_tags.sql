@@ -46,5 +46,5 @@ from parsed_tags pt
 inner join
     tags_taxonomy tt
     on (course_key = object_id)
-    and (pt.tag = _value)
+    and (pt.tag = tt.tag)
     and (tt.taxonomy_name = pt.taxonomy_name)
