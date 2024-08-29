@@ -1,6 +1,5 @@
 select
     mot.name taxonomy_name,
-    mrot.parent parent,
     mrot._value _value,
     mrot.object_id object_id,
     mrot.lineage lineage,
