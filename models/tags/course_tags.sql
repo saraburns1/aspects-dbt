@@ -35,20 +35,6 @@ with
         select id, max(time_last_dumped) as last_modified
         from {{ source("event_sink", "object_tag") }}
         group by id
-    ),
-    tags_table as (
-        select
-            object_id,
-            _value,
-            lineage,
-            trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag,
-            tax.name AS taxonomy_name
-        from {{ source("event_sink", "object_tag") }} ot
-        inner join
-            most_recent_object_tags mrot
-            on mrot.id = ot.id
-            and ot.time_last_dumped = mrot.last_modified
-            INNER JOIN event_sink.taxonomy AS tax ON tax.id = taxonomy
     )
 select
     pt.course_key course_key,
@@ -57,4 +43,8 @@ select
     tt.tag tag,
     tt.lineage lineage
 from parsed_tags pt
-inner join tags_table tt on (course_key = object_id) and (pt.tag = _value) and (tt.taxonomy_name = pt.taxonomy_name)
+inner join
+    tags_taxonomy tt
+    on (course_key = object_id)
+    and (pt.tag = _value)
+    and (tt.taxonomy_name = pt.taxonomy_name)
