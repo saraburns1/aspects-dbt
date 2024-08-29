@@ -37,13 +37,22 @@ with
         group by id
     ),
     tags_table as (
-        select object_id, _value, lineage, trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag
+        select
+            object_id,
+            _value,
+            lineage,
+            trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag
         from {{ source("event_sink", "object_tag") }} ot
         inner join
             most_recent_object_tags mrot
             on mrot.id = ot.id
             and ot.time_last_dumped = mrot.last_modified
     )
-select pt.course_key course_key, pt.course_name course_name, pt.taxonomy_name, tt.tag as tag, tt.lineage as lineage
+select
+    pt.course_key course_key,
+    pt.course_name course_name,
+    pt.taxonomy_name,
+    tt.tag as tag,
+    tt.lineage as lineage
 from parsed_tags pt
 inner join tags_table tt on (course_key = object_id) and (pt.tag = _value)
