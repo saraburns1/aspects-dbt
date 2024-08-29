@@ -52,7 +52,7 @@ select
     pt.course_key course_key,
     pt.course_name course_name,
     pt.taxonomy_name,
-    tt.tag as tag,
-    tt.lineage as lineage
+    tt.tag tag,
+    tt.lineage lineage
 from parsed_tags pt
-inner join tags_table tt on (course_key = object_id) and (pt.tag = _value)
+inner join tags_table tt on (course_key = object_id) and (pt.tag = _value) and (tt.taxonomy_name = pt.taxonomy_name)
