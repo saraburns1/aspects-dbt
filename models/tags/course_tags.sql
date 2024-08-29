@@ -22,9 +22,9 @@ with
         select
             course_key,
             course_name,
-            arrayJoin(JSONExtractArrayRaw(tags_str))::Int32 as object_tag_id
+            arrayJoin(JSONExtractArrayRaw(tags_str))::Int32 as tag_id
         from most_recent_course_tags
     )
-select course_key, course_name, object_tag_id, _value as tag, lineage
+select course_key, course_name, tag_id, _value as tag, lineage
 from parsed_tags
-inner join event_sink.most_recent_object_tags mrot on mrot.id = object_tag_id
+inner join event_sink.most_recent_tags mrot on mrot.id = tag_id
