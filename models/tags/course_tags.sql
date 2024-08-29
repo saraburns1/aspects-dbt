@@ -22,24 +22,9 @@ with
         select
             course_key,
             course_name,
-            JSONExtractKeys(tags_str) as taxonomy,
-            JSONExtractKeysAndValues(tags_str, 'String') as tags_keys,
-            arrayJoin(tags_keys) as taxonomy_tuple,
-            taxonomy_tuple .1 as taxonomy_name,
-            taxonomy_tuple .2 as tags_array_str,
-            JSONExtractArrayRaw(tags_array_str) as tags,
-            trim(BOTH '\"\"' from arrayJoin(tags)) as tag
+            arrayJoin(JSONExtractArrayRaw(tags_str))::Int32 as object_tag_id
         from most_recent_course_tags
     )
-select
-    pt.course_key course_key,
-    pt.course_name course_name,
-    pt.taxonomy_name,
-    tt.tag tag,
-    tt.lineage lineage
-from parsed_tags pt
-inner join
-    tags_taxonomy tt
-    on (course_key = object_id)
-    and (pt.tag = tt.tag)
-    and (tt.taxonomy_name = pt.taxonomy_name)
+select course_key, course_name, object_tag_id, _value as tag, lineage
+from parsed_tags
+inner join event_sink.most_recent_object_tags mrot on mrot.id = object_tag_id
