@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="materialized_view",
+        schema=env_var("ASPECTS_EVENT_SINK_DATABASE", "event_sink"),
+        engine=get_engine("ReplacingMergeTree()"),
+        order_by="(id)",
+        post_hook="OPTIMIZE TABLE {{ this }} {{ on_cluster() }} FINAL",
+    )
+}}
 with
     latest as (
         select id, max(time_last_dumped) as last_modified
