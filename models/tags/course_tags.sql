@@ -41,12 +41,14 @@ with
             object_id,
             _value,
             lineage,
-            trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag
+            trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag,
+            tax.name AS taxonomy_name
         from {{ source("event_sink", "object_tag") }} ot
         inner join
             most_recent_object_tags mrot
             on mrot.id = ot.id
             and ot.time_last_dumped = mrot.last_modified
+            INNER JOIN event_sink.taxonomy AS tax ON tax.id = taxonomy
     )
 select
     pt.course_key course_key,
