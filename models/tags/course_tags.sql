@@ -1,6 +1,6 @@
 with
     most_recent_overviews as (
-        select org, course_key, max(modified) as last_modified
+        select org, course_key, max(time_last_dumped) as last_modified
         from {{ source("event_sink", "course_overviews") }}
         group by org, course_key
     ),
@@ -16,7 +16,7 @@ with
             most_recent_overviews mro
             on co.org = mro.org
             and co.course_key = mro.course_key
-            and co.modified = mro.last_modified
+            and co.time_last_dumped = mro.last_modified
     ),
     parsed_tags as (
         select
@@ -30,11 +30,6 @@ with
             JSONExtractArrayRaw(tags_array_str) as tags,
             trim(BOTH '\"\"' from arrayJoin(tags)) as tag
         from most_recent_course_tags
-    ),
-    most_recent_object_tags as (
-        select id, max(time_last_dumped) as last_modified
-        from {{ source("event_sink", "object_tag") }}
-        group by id
     )
 select
     pt.course_key course_key,
