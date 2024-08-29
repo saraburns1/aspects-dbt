@@ -5,7 +5,7 @@ with latest as (
     ),
     most_recent as (
         select
-            id
+            id,
             taxonomy,
             parent,
             value,

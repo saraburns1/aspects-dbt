@@ -5,8 +5,8 @@ with latest as (
     ),
     most_recent as (
         select
-            id
-            name,
+            id,
+            name
         from {{ source("event_sink", "taxonomy") }} ot
         inner join
             latest mrot
