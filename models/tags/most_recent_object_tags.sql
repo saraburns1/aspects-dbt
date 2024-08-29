@@ -8,6 +8,7 @@ with latest as (
             object_id,
             _value,
             lineage,
+            taxonomy,
             trim(BOTH '\"\"' from arrayJoin(JSONExtractArrayRaw(lineage))) tag
         from {{ source("event_sink", "object_tag") }} ot
         inner join
