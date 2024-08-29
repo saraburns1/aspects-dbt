@@ -182,22 +182,3 @@ models:
       - name: course_order
         data_type: Int32
         description: "The sort order of this block in the course across all course blocks"
-
-  - name: course_tags
-    description: "Tag with lineage data for courses"
-    columns:
-      - name: course_key
-        data_type: String
-        description: "The course key for the course"
-      - name: course_name
-        data_type: String
-        description: "The name of the course"
-      - name: taxonomy_name
-        data_type: String
-        description: "The name of the parent taxonomy of the tag"
-      - name: tag
-        data_type: String
-        description: "The name of the tag"
-      - name: lineage
-        data_type: String
-        description: "Lineage data of the tag for parent tags"
