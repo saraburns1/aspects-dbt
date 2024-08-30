@@ -25,6 +25,6 @@ with
             arrayJoin(JSONExtractArrayRaw(tags_str))::Int32 as tag_id
         from most_recent_course_tags
     )
-select course_key, course_name, tag_id, _value as tag, lineage
+select course_key, course_name, tag_id, value as tag, lineage
 from parsed_tags
 inner join event_sink.most_recent_tags mrot on mrot.id = tag_id
