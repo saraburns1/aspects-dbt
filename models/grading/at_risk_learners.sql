@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="materialized_view",
+        engine=get_engine("ReplacingMergeTree()"),
+        primary_key="(org, course_key, actor_id)",
+        order_by="(org, course_key, actor_id)",
+    )
+}}
+
 with
     page_visits as (
         select org, course_key, actor_id, max(emission_time) as last_visited
