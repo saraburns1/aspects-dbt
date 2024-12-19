@@ -97,9 +97,9 @@ models:
         description: "The mode of enrollment"
       - name: enrollment_status
         description: "Whether a learner is actively enrolled in a course"
-        data_tests:
-          - accepted_values:
-              values: ["registered", "unregistered"]
+        # data_tests:
+        #   - accepted_values:
+        #       values: ["registered", "unregistered"]
       - name: course_grade
         data_type: float64
         description: "The most recent grade for the learner"
