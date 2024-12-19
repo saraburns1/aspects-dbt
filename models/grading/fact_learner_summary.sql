@@ -37,4 +37,3 @@ left join
     and fss.course_key = let.course_key
     and fss.actor_id = let.actor_id
 where 1 = 1 {{ common_filters() }}
-    {% include 'openedx-assets/queries/user_filters.sql' %}
