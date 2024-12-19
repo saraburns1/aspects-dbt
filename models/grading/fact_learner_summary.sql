@@ -25,7 +25,7 @@ select
     fss.email as email,
     fes.max_emission_time as emission_time,
     GREATEST(let.last_visited, fss.enrolled_at) as last_visited
-from {{ ref('fact_student_status') }} fss
+from {{ ref('fact_student_status') }}(org_filter = {org_filter:String},course_key_filter = {course_key_filter:String}) fss
 left join
     enrollment_status fes
     on fss.org = fes.org
@@ -36,4 +36,3 @@ left join
     on fss.org = let.org
     and fss.course_key = let.course_key
     and fss.actor_id = let.actor_id
-where 1 = 1 {{ common_filters() }}

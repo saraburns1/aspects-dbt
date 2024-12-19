@@ -32,3 +32,4 @@ left outer join
     {{ ref("dim_user_pii") }} users
     on (actor_id like 'mailto:%' and SUBSTRING(actor_id, 8) = users.email)
     or actor_id = toString(users.external_user_id)
+where 1 = 1 {{ common_filters() }}
