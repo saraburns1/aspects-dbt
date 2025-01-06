@@ -13,19 +13,89 @@ select
     users.name as name,
     users.email as email,
     fes.emission_time as enrolled_at
-from {{ ref("fact_enrollment_status") }} fes FINAL
+from
+    (
+        select *
+        from {{ ref("fact_enrollment_status") }} FINAL
+        where
+            1 = 1
+            and (
+                (
+                    {org_filter:String} <> '[]'
+                    and org in cast({org_filter:String}, 'Array(String)')
+                )
+                or {org_filter:String} = '[]'
+            )
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
+    ) fes
 left join
-    {{ ref("fact_learner_course_status") }} lg
+    (
+        select *
+        from {{ ref("fact_learner_course_status") }}
+        where
+            1 = 1
+            and (
+                (
+                    {org_filter:String} <> '[]'
+                    and org in cast({org_filter:String}, 'Array(String)')
+                )
+                or {org_filter:String} = '[]'
+            )
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
+    ) lg
     on fes.org = lg.org
     and fes.course_key = lg.course_key
     and fes.actor_id = lg.actor_id
 left join
-    {{ ref("fact_learner_course_grade") }} ls
+    (
+        select *
+        from {{ ref("fact_learner_course_grade") }}
+        where
+            1 = 1
+            and (
+                (
+                    {org_filter:String} <> '[]'
+                    and org in cast({org_filter:String}, 'Array(String)')
+                )
+                or {org_filter:String} = '[]'
+            )
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
+    ) ls
     on fes.org = ls.org
     and fes.course_key = ls.course_key
     and fes.actor_id = ls.actor_id
 join
-    {{ ref("course_names") }} courses
+    (
+        select *
+        from {{ ref("course_names") }}
+        where
+            1 = 1
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
+    ) courses
     on fes.org = courses.org
     and fes.course_key = courses.course_key
 left outer join

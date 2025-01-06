@@ -1,42 +1,44 @@
 with
     latest_emission_time as (
         select org, course_key, actor_id, MAX(emission_time) as last_visited
-        from {{ ref('fact_learner_last_course_visit') }}
+        from {{ ref("fact_learner_last_course_visit") }}
         where
-            1 = 1    and (
-        (
-            {org_filter:String} <> '[]'
-            and org in cast({org_filter:String}, 'Array(String)')
-        )
-        or {org_filter:String} = '[]'
-    )
-    and (
-        (
-            {course_key_filter:String} <> '[]'
-            and course_key in cast({course_key_filter:String}, 'Array(String)')
-        )
-        or {course_key_filter:String} = '[]'
-    )
+            1 = 1
+            and (
+                (
+                    {org_filter:String} <> '[]'
+                    and org in cast({org_filter:String}, 'Array(String)')
+                )
+                or {org_filter:String} = '[]'
+            )
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
         group by org, course_key, actor_id
     ),
     enrollment_status as (
         select org, course_key, actor_id, MAX(emission_time) as max_emission_time
-        from {{ ref('fact_enrollment_status') }}
+        from {{ ref("fact_enrollment_status") }}
         where
-            1 = 1    and (
-        (
-            {org_filter:String} <> '[]'
-            and org in cast({org_filter:String}, 'Array(String)')
-        )
-        or {org_filter:String} = '[]'
-    )
-    and (
-        (
-            {course_key_filter:String} <> '[]'
-            and course_key in cast({course_key_filter:String}, 'Array(String)')
-        )
-        or {course_key_filter:String} = '[]'
-    )
+            1 = 1
+            and (
+                (
+                    {org_filter:String} <> '[]'
+                    and org in cast({org_filter:String}, 'Array(String)')
+                )
+                or {org_filter:String} = '[]'
+            )
+            and (
+                (
+                    {course_key_filter:String} <> '[]'
+                    and course_key in cast({course_key_filter:String}, 'Array(String)')
+                )
+                or {course_key_filter:String} = '[]'
+            )
         group by org, course_key, actor_id
     ),
     student_status as (
@@ -55,22 +57,12 @@ with
             fss.name as name,
             fss.email as email,
             fss.enrolled_at as enrolled_at
-        from {{ ref('fact_student_status') }} fss
-        where
-            1 = 1    and (
-        (
-            {org_filter:String} <> '[]'
-            and org in cast({org_filter:String}, 'Array(String)')
-        )
-        or {org_filter:String} = '[]'
-    )
-    and (
-        (
-            {course_key_filter:String} <> '[]'
-            and course_key in cast({course_key_filter:String}, 'Array(String)')
-        )
-        or {course_key_filter:String} = '[]'
-    )
+        from
+            {{
+                ref("fact_student_status")
+            }}(
+                    org_filter=org_filter, course_key_filter=course_key_filter
+                ) fss
     )
 select
     fss.org as org,
@@ -99,17 +91,3 @@ left join
     on fss.org = let.org
     and fss.course_key = let.course_key
     and fss.actor_id = let.actor_id
-where 1 = 1    and (
-        (
-            {org_filter:String} <> '[]'
-            and org in cast({org_filter:String}, 'Array(String)')
-        )
-        or {org_filter:String} = '[]'
-    )
-    and (
-        (
-            {course_key_filter:String} <> '[]'
-            and course_key in cast({course_key_filter:String}, 'Array(String)')
-        )
-        or {course_key_filter:String} = '[]'
-    )
