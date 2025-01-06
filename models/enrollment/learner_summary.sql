@@ -61,7 +61,7 @@ with
             {{
                 ref("fact_student_status")
             }}(
-                    org_filter=org_filter, course_key_filter=course_key_filter
+                    org_filter={org_filter:String}, course_key_filter={course_key_filter:String}
                 ) fss
     )
 select
