@@ -106,3 +106,10 @@ The username of the learner
 {% docs verb_id %}
 The xAPI verb identifier
 {% enddocs %}
+
+
+{% docs object_tag_source %}
+Course objects and their associated tags from CMS events:  
+`COURSE_CREATED, XBLOCK_CREATED, LIBRARY_BLOCK_CREATED, CONTENT_OBJECT_ASSOCIATIONS_CHANGED`  
+and `post_save` Django signal on the Object Tag model
+{% enddocs %}

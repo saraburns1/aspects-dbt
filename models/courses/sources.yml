@@ -7,7 +7,7 @@ sources:
     tables:
 
       - name: course_blocks
-        description: "XBlock data from CMS COURSE_PUBLISHED events"
+        description: XBlock data from CMS `COURSE_PUBLISHED` events
         columns:
           - name: org
             description: '{{ doc("org")}}'
@@ -38,7 +38,7 @@ sources:
             type: String
 
       - name: course_overviews
-        description: "Course metadata from CMS COURSE_PUBLISHED events"
+        description: Course metadata from CMS `COURSE_PUBLISHED` events
         columns:
           - name: org
             description: '{{ doc("org")}}' 

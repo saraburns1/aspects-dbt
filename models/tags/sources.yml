@@ -6,9 +6,7 @@ sources:
     tables:
 
       - name: object_tag
-        description: >
-          Course objects and their associated tags from events:
-          CMS - COURSE_CREATED, XBLOCK_CREATED, LIBRARY_BLOCK_CREATED, CONTENT_OBJECT_ASSOCIATIONS_CHANGED
+        description: '{{ doc("object_tag_source") }}'
         columns:
           - name: id
             description: '{{ doc("id") }}'
@@ -39,7 +37,7 @@ sources:
             type: String
 
       - name: taxonomy
-        description: Taxonomy data table
+        description: Taxonomy data from `post_save` Django signal on the Taxonomy model
         columns:
           - name: id
             description: '{{ doc("id") }}'
@@ -55,7 +53,7 @@ sources:
             type: String
 
       - name: tag
-        description: All tags for all taxonomies. Includes parent tag and lineage string for heirarchal relationships
+        description: Tag data from `post_save` Django signal on the Tag model. Includes parent tag and lineage string for heirarchal relationships.
         columns:
           - name: id
             description: '{{ doc("id") }}'

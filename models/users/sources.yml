@@ -6,7 +6,7 @@ sources:
     tables:
 
       - name: user_profile
-        description: All users and associated data
+        description: Users and associated data from `post_save` Django signal on the UserProfile model
         columns:
           - name: id
             description: '{{ doc("id") }}'
@@ -72,7 +72,7 @@ sources:
             type: String
 
       - name: external_id
-        description: User ID with external id
+        description: User ID with external id from `post_save` Django signal on the ExternalId model
         columns:
           - name: external_user_id
             description: "The external user id"
