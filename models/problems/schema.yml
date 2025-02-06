@@ -209,6 +209,7 @@ models:
       - name: section_number
         data_type: String
         description: '{{ doc("section_number") }}'
+      - name: section_with_name
         data_type: String
         description: '{{ doc("section_with_name") }}'
       - name: subsection_number
