@@ -255,6 +255,12 @@ models:
       - name: last_attempt_at
         data_type: DateTime
         description: "The timestamp of the last attempt"
+      - name: first_success_attempt
+        data_type: Int32
+        description: "The attempt number of the first successful response"
+      - name: last_attempt
+        data_type: Int32
+        description: "The attempt number of the last response"
       - name: emission_time
         data_type: DateTime
         description: "The timestamp of the last attempt or the first successful attempt"
