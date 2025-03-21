@@ -5,9 +5,6 @@
             ("course_key", "String"),
             ("tag", "String"),
             ("tag_id", "Int32"),
-            ("course_name", "String"),
-            ("taxonomy_name", "String"),
-            ("lineage", "String"),
         ],
         primary_key="(course_key, tag)",
         layout="COMPLEX_KEY_HASHED()",
@@ -19,15 +16,9 @@
     )
 }}
 
-with
-    parsed_tags as (
-        select
-            course_key,
-            course_name,
-            arrayJoin(JSONExtractArrayRaw(tags_str))::Int32 as tag_id
-        from {{ ref("dim_course_names") }}
-    )
-select course_key, course_name, tag_id, value as tag, lineage, mrt.name as taxonomy_name
-from parsed_tags
-inner join {{ ref("dim_most_recent_tags") }} mrot FINAL on mrot.id = tag_id
-inner join {{ ref("dim_most_recent_taxonomies") }} mrt FINAL on mrt.id = mrot.taxonomy
+select 
+    course_names.course_key as course_key, 
+    most_recent_tags.value as tag,
+    arrayJoin(JSONExtractArrayRaw(course_names.tags_str))::Int32 as tag_id
+from {{ ref("dim_course_names") }} course_names
+inner join {{ ref("dim_most_recent_tags") }} most_recent_tags FINAL on most_recent_tags.id = tag_id

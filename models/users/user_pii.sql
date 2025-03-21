@@ -21,24 +21,24 @@
 
 with
     most_recent_user_profile as (
-        select user_id, max(time_last_dumped) as time_last_dumped
+        select 
+            user_id, 
+            argMax(username, time_last_dumped) as username,
+            argMax(name, time_last_dumped) as name,
+            argMax(email, time_last_dumped) as email
         from {{ source("event_sink", "user_profile") }}
         group by user_id
     )
 select
-    ex.user_id as user_id,
+    external_id.user_id as user_id,
     if(
-        empty(ex.external_user_id),
+        empty(external_id.external_user_id),
         concat('mailto:', email),
-        ex.external_user_id::String
+        external_id.external_user_id::String
     ) as external_user_id,
-    up.username as username,
-    up.name as name,
-    up.email as email
-from most_recent_user_profile mrup
+    user.username as username,
+    user.name as name,
+    user.email as email
+from most_recent_user_profile user
 left outer join
-    {{ source("event_sink", "external_id") }} ex on mrup.user_id = ex.user_id
-left outer join
-    {{ source("event_sink", "user_profile") }} up
-    on up.user_id = mrup.user_id
-    and up.time_last_dumped = mrup.time_last_dumped
+    {{ source("event_sink", "external_id") }} external_id on user.user_id = external_id.user_id

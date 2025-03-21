@@ -1,33 +1,33 @@
 select
-    fes.org as org,
-    fes.course_key as course_key,
-    fes.actor_id as actor_id,
-    courses.course_name as course_name,
-    courses.course_run as course_run,
-    if(empty(approving_state), 'failed', approving_state) as approving_state,
-    enrollment_mode,
-    enrollment_status,
-    course_grade,
+    most_recent_enrollment.org as org,
+    most_recent_enrollment.course_key as course_key,
+    most_recent_enrollment.actor_id as actor_id,
+    course_names.course_name as course_name,
+    course_names.course_run as course_run,
+    if(empty(learner_course_state.approving_state), 'failed', learner_course_state.approving_state) as approving_state,
+    most_recent_enrollment.enrollment_mode,
+    most_recent_enrollment.enrollment_status,
+    learner_course_grade.course_grade,
     {{ get_bucket("course_grade") }} as grade_bucket,
     users.username as username,
     users.name as name,
     users.email as email,
-    fes.emission_time as enrolled_at
-from {{ ref("dim_most_recent_enrollment") }} fes
+    most_recent_enrollment.emission_time as enrolled_at
+from {{ ref("dim_most_recent_enrollment") }} most_recent_enrollment
 left join
-    {{ ref("dim_learner_most_recent_course_state") }} lg
-    on fes.org = lg.org
-    and fes.course_key = lg.course_key
-    and fes.actor_id = lg.actor_id
+    {{ ref("dim_learner_most_recent_course_state") }} learner_course_state
+    on most_recent_enrollment.org = learner_course_state.org
+    and most_recent_enrollment.course_key = learner_course_state.course_key
+    and most_recent_enrollment.actor_id = learner_course_state.actor_id
 left join
-    {{ ref("dim_learner_most_recent_course_grade") }} ls
-    on fes.org = ls.org
-    and fes.course_key = ls.course_key
-    and fes.actor_id = ls.actor_id
+    {{ ref("dim_learner_most_recent_course_grade") }} learner_course_grade
+    on most_recent_enrollment.org = learner_course_grade.org
+    and most_recent_enrollment.course_key = learner_course_grade.course_key
+    and most_recent_enrollment.actor_id = learner_course_grade.actor_id
 join
-    {{ ref("dim_course_names") }} courses
-    on fes.org = courses.org
-    and fes.course_key = courses.course_key
+    {{ ref("dim_course_names") }} course_names
+    on most_recent_enrollment.org = course_names.org
+    and most_recent_enrollment.course_key = course_names.course_key
 left outer join
     {{ ref("dim_user_pii") }} users
     on (actor_id like 'mailto:%' and SUBSTRING(actor_id, 8) = users.email)

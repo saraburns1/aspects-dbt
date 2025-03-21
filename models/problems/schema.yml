@@ -89,58 +89,6 @@ models:
         data_type: DateTime
         description: '{{ doc("emission_time") }}'
 
-  - name: fact_learner_response_attempts
-    description: "Internal table for problem results"
-    columns:
-      - name: emission_time
-        data_type: DateTime
-        description: '{{ doc("emission_time") }}'
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: course_name
-        data_type: String
-        description: '{{ doc("course_name") }}'
-      - name: course_run
-        data_type: String
-        description: '{{ doc("course_run") }}'
-      - name: problem_id
-        data_type: String
-        description: "The problem's unique identifier"
-      - name: problem_name
-        data_type: String
-        description: "The problem's name"
-      - name: problem_name_with_location
-        data_type: String
-        description: "The problem's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at problem names and can help data consumers understand which problem they are analyzing"
-      - name: problem_link
-        data_type: String
-        description: "An anchor tag with a link to the problem"
-      - name: actor_id
-        data_type: String
-        description: '{{ doc("actor_id") }}'
-      - name: responses
-        data_type: String
-        description: "The responses for this submission. If a problem has multiple parts, values for all parts will be in this field"
-      - name: success
-        data_type: bool
-        description: "Boolean indicating whether the responses were correct"
-      - name: attempts
-        data_type: Int16
-        description: "Number indicating which attempt this was"
-      - name: graded
-        data_type: bool
-        description: '{{ doc("graded") }}'
-      - name: interaction_type
-        data_type: String
-        description: "The type of interaction - e.g. multiple choice"
-      - name: course_order
-        data_type: Int32
-        description: '{{ doc("course_order") }}'
-
   - name: fact_section_problem_engagement
     description: "A record per course per section per learner with their engagement level"
     columns:
