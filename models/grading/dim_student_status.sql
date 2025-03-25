@@ -2,17 +2,17 @@ select
     most_recent_enrollment.org as org,
     most_recent_enrollment.course_key as course_key,
     most_recent_enrollment.actor_id as actor_id,
-    course_names.course_name as course_name,
-    course_names.course_run as course_run,
+    -- course_names.course_name as course_name,
+    -- course_names.course_run as course_run,
     if(empty(learner_course_state.approving_state), 'failed', learner_course_state.approving_state) as approving_state,
-    most_recent_enrollment.enrollment_mode,
+    -- most_recent_enrollment.enrollment_mode,
     most_recent_enrollment.enrollment_status,
     learner_course_grade.course_grade,
-    {{ get_bucket("course_grade") }} as grade_bucket,
-    users.username as username,
-    users.name as name,
-    users.email as email,
-    most_recent_enrollment.emission_time as enrolled_at
+    -- {{ get_bucket("course_grade") }} as grade_bucket,
+    -- users.username as username,
+    -- users.name as name,
+    -- users.email as email,
+    -- most_recent_enrollment.emission_time as enrolled_at
 from {{ ref("dim_most_recent_enrollment") }} most_recent_enrollment
 left join
     {{ ref("dim_learner_most_recent_course_state") }} learner_course_state

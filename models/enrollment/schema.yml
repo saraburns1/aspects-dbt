@@ -22,15 +22,6 @@ models:
           - accepted_values:
               values: ["registered", "unregistered"]
         data_type: String
-      - name: username
-        data_type: String
-        description: '{{ doc("username") }}'
-      - name: name
-        data_type: String
-        description: '{{ doc("learner_name") }}'
-      - name: email
-        data_type: String
-        description: '{{ doc("email") }}'
 
   - name: enrollment_events
     docs:
