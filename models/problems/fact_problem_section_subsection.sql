@@ -1,4 +1,7 @@
 with
+    problems_per_subsection as (
+        select * from ({{ items_per_subsection("%@vertical+block@%") }})
+    ),
     get_problem_data as (
         select
             attempts.org as org,
@@ -11,7 +14,7 @@ with
             items.subsection_block_id as subsection_block_id,
             items.section_with_name as section_with_name,
             items.subsection_with_name as subsection_with_name
-        from {{ ref("items_per_subsection") }} items
+        from problems_per_subsection items
         join
             {{ ref("fact_problem_events_evaluated") }} attempts
             on (
@@ -20,7 +23,6 @@ with
                 and attempts.section_number = items.section_number
                 and attempts.subsection_number = items.subsection_number
             )
-        where items.block_type = 'problem+block'
     )
 select
     org,

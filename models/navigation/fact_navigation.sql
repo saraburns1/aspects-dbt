@@ -1,4 +1,7 @@
 with
+    pages_per_subsection as (
+        select * from ({{ items_per_subsection("%@vertical+block@%") }})
+    ),
     final_results as (
         select
             navigation.org as org,
@@ -24,14 +27,13 @@ with
                 and navigation.block_id = blocks.block_id
             )
         join
-            {{ ref("items_per_subsection") }} items
+            pages_per_subsection pages
             on (
                 items.org = navigation.org
                 and items.course_key = navigation.course_key
                 and items.section_number = blocks.section_number
                 and items.subsection_number = blocks.subsection_number
             )
-        where items.block_type = 'vertical+block'
     )
 select
     org,
