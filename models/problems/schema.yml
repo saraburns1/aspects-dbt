@@ -1,6 +1,69 @@
 version: 2
 
 models:
+  - name: problem_events
+    docs:
+        node_color: '{{ var("color_xapi") }}'
+    description: "Problem events"
+    columns:
+      - name: event_id
+        data_type: UUID
+        description: '{{ doc("event_id") }}'
+      - name: emission_time
+        data_type: DateTime
+        description: '{{ doc("emission_time") }}'
+      - name: actor_id
+        data_type: String
+        description: '{{ doc("actor_id") }}'
+      - name: object_id
+        data_type: String
+        description: '{{ doc("object_id") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: verb_id
+        data_type: String
+        description: '{{ doc("verb_id") }}'
+      - name: responses
+        data_type: String
+        description: "The responses for this submission. If a problem has multiple parts, values for all parts will be in this field"
+      - name: scaled_score
+        data_type: Float32
+        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
+      - name: success
+        data_type: Boolean
+        description: '{{ doc("success") }}'
+      - name: interaction_type
+        data_type: String
+        description: "The type of interaction"
+      - name: attempts
+        data_type: Int16
+        description: '{{ doc("attempt") }}'
+      - name: problem_id
+        data_type: String
+        description: "The problem's unique identifier"
+      - name: course_name
+        data_type: String
+        description: '{{ doc("course_name") }}'
+      - name: block_name
+        data_type: String
+        description: "The name of the block"
+      - name: display_name_with_location
+        data_type: String
+        description: "The block's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at block names and can help data consumers understand which block they are analyzing"      
+      - name: problem_link
+        data_type: String
+        description: "An anchor tag with a link to the problem"
+      - name: graded
+        data_type: bool
+        description: '{{ doc("graded") }}'
+      - name: course_order
+        data_type: Int32
+        description: '{{ doc("course_order") }}'
+
   - name: dim_learner_first_response
     description: "A record per course per problem per learner with their first attempt"
     columns:
@@ -38,43 +101,6 @@ models:
         data_type: DateTime
         description: "The timestamp of the first attempt"
 
-  - name: dim_learner_first_success_response
-    description: "A record per course per problem per learner with their first successful attempt"
-    columns:
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: problem_id
-        data_type: String
-        description: "The problem's unique identifier"
-      - name: object_id
-        data_type: String
-        description: '{{ doc("object_id") }}'
-      - name: actor_id
-        data_type: String
-        description: '{{ doc("actor_id") }}'
-      - name: interaction_type
-        data_type: String
-        description: 'The type of problem (choice, numeric, etc)'
-      - name: attempt
-        data_type: Int16
-        description: '{{ doc("attempt") }}'
-      - name: success
-        data_type: Boolean
-        description: '{{ doc("success") }}'
-      - name: responses
-        data_type: String
-        description: "The responses for the first successful submission. If a problem has multiple parts, values for all parts will be in this field"
-      - name: scaled_score
-        data_type: Float32
-        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
-      - name: emission_time
-        data_type: DateTime
-        description: "The timestamp of the first successful attempt"
-
   - name: dim_learner_last_response
     description: "A record per course per problem per learner with their last attempt"
     columns:
@@ -111,6 +137,43 @@ models:
       - name: emission_time
         data_type: DateTime
         description: "The timestamp of the last attempt"
+
+  - name: dim_learner_first_success_response
+    description: "A record per course per problem per learner with their first successful attempt"
+    columns:
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: problem_id
+        data_type: String
+        description: "The problem's unique identifier"
+      - name: object_id
+        data_type: String
+        description: '{{ doc("object_id") }}'
+      - name: actor_id
+        data_type: String
+        description: '{{ doc("actor_id") }}'
+      - name: interaction_type
+        data_type: String
+        description: 'The type of problem (choice, numeric, etc)'
+      - name: attempt
+        data_type: Int16
+        description: '{{ doc("attempt") }}'
+      - name: success
+        data_type: Boolean
+        description: '{{ doc("success") }}'
+      - name: responses
+        data_type: String
+        description: "The responses for the first successful submission. If a problem has multiple parts, values for all parts will be in this field"
+      - name: scaled_score
+        data_type: Float32
+        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
+      - name: emission_time
+        data_type: DateTime
+        description: "The timestamp of the first successful attempt"
 
   - name: dim_problem_responses
     columns:
@@ -336,66 +399,3 @@ models:
       - name: subsection_with_name
         data_type: String
         description: '{{ doc("subsection_with_name") }}'
-
-  - name: problem_events
-    docs:
-        node_color: '{{ var("color_xapi") }}'
-    description: "Problem events"
-    columns:
-      - name: event_id
-        data_type: UUID
-        description: '{{ doc("event_id") }}'
-      - name: emission_time
-        data_type: DateTime
-        description: '{{ doc("emission_time") }}'
-      - name: actor_id
-        data_type: String
-        description: '{{ doc("actor_id") }}'
-      - name: object_id
-        data_type: String
-        description: '{{ doc("object_id") }}'
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: verb_id
-        data_type: String
-        description: '{{ doc("verb_id") }}'
-      - name: responses
-        data_type: String
-        description: "The responses for this submission. If a problem has multiple parts, values for all parts will be in this field"
-      - name: scaled_score
-        data_type: Float32
-        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
-      - name: success
-        data_type: Boolean
-        description: '{{ doc("success") }}'
-      - name: interaction_type
-        data_type: String
-        description: "The type of interaction"
-      - name: attempts
-        data_type: Int16
-        description: '{{ doc("attempt") }}'
-      - name: problem_id
-        data_type: String
-        description: "The problem's unique identifier"
-      - name: course_name
-        data_type: String
-        description: '{{ doc("course_name") }}'
-      - name: block_name
-        data_type: String
-        description: "The name of the block"
-      - name: display_name_with_location
-        data_type: String
-        description: "The block's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at block names and can help data consumers understand which block they are analyzing"      
-      - name: problem_link
-        data_type: String
-        description: "An anchor tag with a link to the problem"
-      - name: graded
-        data_type: bool
-        description: '{{ doc("graded") }}'
-      - name: course_order
-        data_type: Int32
-        description: '{{ doc("course_order") }}'

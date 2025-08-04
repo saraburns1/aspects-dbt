@@ -1,28 +1,6 @@
 version: 2
 
 models:  
-  - name: dim_course_block_names
-    description: "An in-memory dictionary of course blocks with their display names and additional metadata. Only stores the most recent row per block location."
-    columns:
-      - name: location
-        data_type: String
-        description: "The location of the block"
-      - name: block_name
-        data_type: String
-        description: "The name of the block"
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: graded
-        data_type: Boolean
-        description: '{{ doc("graded") }}'
-      - name: display_name_with_location
-        data_type: String
-        description: "The block's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at block names and can help data consumers understand which block they are analyzing"
-      - name: course_order
-        data_type: Int32
-        description: '{{ doc("course_order") }}'
-
   - name: dim_course_blocks
     description: "A denormalized table of course block information. This should be preferred over dim_course_blocks_extended when section and subsection names are not necessary to include in a model"
     columns:
@@ -78,26 +56,27 @@ models:
         data_type: String
         description: "The name of the subsection"
 
-  - name: dim_course_names
-    docs:
-        node_color: '{{ var("color_event_sink") }}'
-    description: "A dictionary of courses with their names"
+  - name: dim_course_block_names
+    description: "An in-memory dictionary of course blocks with their display names and additional metadata. Only stores the most recent row per block location."
     columns:
+      - name: location
+        data_type: String
+        description: "The location of the block"
+      - name: block_name
+        data_type: String
+        description: "The name of the block"
       - name: course_key
         data_type: String
         description: '{{ doc("course_key") }}'
-      - name: course_name
+      - name: graded
+        data_type: Boolean
+        description: '{{ doc("graded") }}'
+      - name: display_name_with_location
         data_type: String
-        description: '{{ doc("course_name") }}'
-      - name: course_run
-        data_type: String
-        description: '{{ doc("course_run") }}'
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: tags_str
-        data_type: String
-        description: "A list of tags associated with the course"
+        description: "The block's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at block names and can help data consumers understand which block they are analyzing"
+      - name: course_order
+        data_type: Int32
+        description: '{{ doc("course_order") }}'
 
   - name: dim_most_recent_course_blocks
     docs:
@@ -122,3 +101,24 @@ models:
       - name: course_order
         data_type: Int32
         description: '{{ doc("course_order") }}'
+
+  - name: dim_course_names
+    docs:
+        node_color: '{{ var("color_event_sink") }}'
+    description: "A dictionary of courses with their names"
+    columns:
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: course_name
+        data_type: String
+        description: '{{ doc("course_name") }}'
+      - name: course_run
+        data_type: String
+        description: '{{ doc("course_run") }}'
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: tags_str
+        data_type: String
+        description: "A list of tags associated with the course"
