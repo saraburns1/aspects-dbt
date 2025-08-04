@@ -64,8 +64,8 @@ models:
         data_type: Int32
         description: '{{ doc("course_order") }}'
 
-  - name: dim_learner_response_attempt
-    description: "A record per course per problem per learner with their last attempt and first success"
+  - name: fact_problem_engagement
+    description: "A record per course per section and subsection per learner with engagement level"
     columns:
       - name: org
         data_type: String
