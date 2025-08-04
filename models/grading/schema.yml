@@ -43,39 +43,6 @@ models:
           - accepted_values:
               values: ["passed", "failed"]
 
-  - name: grading_events
-    docs:
-        node_color: '{{ var("color_xapi") }}'
-    description: "Events related to grading"
-    columns:
-      - name: event_id
-        data_type: UUID
-        description: '{{ doc("event_id") }}'
-      - name: emission_time
-        data_type: DateTime
-        description: '{{ doc("emission_time") }}'
-      - name: actor_id
-        data_type: String
-        description: '{{ doc("actor_id") }}'
-      - name: object_id
-        data_type: String
-        description: '{{ doc("object_id") }}'
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: verb_id
-        data_type: String
-        description: '{{ doc("verb_id") }}'
-      - name: scaled_score
-        data_type: float64
-        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
-      - name: approving_state
-        data_type: String
-        description: "The most recent approving_state of the learner's grade"
-
   - name: dim_student_status
     description: "One record per learner per course for the most recent grade and enrollment status"
     columns:
@@ -123,3 +90,36 @@ models:
       - name: enrolled_at
         data_type: DateTime
         description: "The timestamp, to the second, of the most recent enrollment action for this learner and course."
+
+  - name: grading_events
+    docs:
+        node_color: '{{ var("color_xapi") }}'
+    description: "Events related to grading"
+    columns:
+      - name: event_id
+        data_type: UUID
+        description: '{{ doc("event_id") }}'
+      - name: emission_time
+        data_type: DateTime
+        description: '{{ doc("emission_time") }}'
+      - name: actor_id
+        data_type: String
+        description: '{{ doc("actor_id") }}'
+      - name: object_id
+        data_type: String
+        description: '{{ doc("object_id") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: verb_id
+        data_type: String
+        description: '{{ doc("verb_id") }}'
+      - name: scaled_score
+        data_type: float64
+        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
+      - name: approving_state
+        data_type: String
+        description: "The most recent approving_state of the learner's grade"

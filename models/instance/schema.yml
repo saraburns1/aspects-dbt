@@ -1,30 +1,6 @@
 version: 2
 
 models:
-  - name: fact_instance_courses
-    docs:
-        node_color: '{{ var("color_xapi") }}'
-    description: "A materialized view summarizing site-wide course activity"
-    columns:
-      - name: emission_hour
-        data_type: DateTime(64)
-        description: "Time of summary, rounded to the nearest hour"
-      - name: courses_cnt
-        data_type: Int
-        description: "The number of xAPI courses active in the given hour"
-
-  - name: fact_instance_events
-    docs:
-        node_color: '{{ var("color_xapi") }}'
-    description: "A materialized view summarizing site-wide xAPI event activity"
-    columns:
-      - name: emission_day
-        data_type: DateTime
-        description: "Time of summary, truncated to the day"
-      - name: events_cnt
-        data_type: Int
-        description: "The number of xAPI events that occurred in the given hour"
-
   - name: fact_instance_actors
     docs:
         node_color: '{{ var("color_xapi") }}'
@@ -36,6 +12,18 @@ models:
       - name: actors_cnt
         data_type: Int
         description: "The number of xAPI actors active in the given hour"
+
+  - name: fact_instance_courses
+    docs:
+        node_color: '{{ var("color_xapi") }}'
+    description: "A materialized view summarizing site-wide course activity"
+    columns:
+      - name: emission_hour
+        data_type: DateTime(64)
+        description: "Time of summary, rounded to the nearest hour"
+      - name: courses_cnt
+        data_type: Int
+        description: "The number of xAPI courses active in the given hour"
 
   - name: fact_instance_enrollments
     description: "A materialized view for summarizing site-wide enrollment activity"
@@ -61,3 +49,15 @@ models:
       - name: course_enrollment_mode_status_cnt
         data_type: Int
         description: "The number of enrollment events for this mode that occurred in the given hour"
+
+  - name: fact_instance_events
+    docs:
+        node_color: '{{ var("color_xapi") }}'
+    description: "A materialized view summarizing site-wide xAPI event activity"
+    columns:
+      - name: emission_day
+        data_type: DateTime
+        description: "Time of summary, truncated to the day"
+      - name: events_cnt
+        data_type: Int
+        description: "The number of xAPI events that occurred in the given hour"
