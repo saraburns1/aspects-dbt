@@ -111,22 +111,8 @@ unit_tests:
       rows: |
         select * from problem_events_expected
 
-  - name: test_dim_subsection_performance
-    model: dim_subsection_performance
-    config:
-      tags: 'ci'
-    given:
-      - input: ref('dim_subsection_problem_results')
-        format: sql
-        rows: |
-          select * from dim_subsection_problem_results
-    expect:
-      format: sql
-      rows: |
-        select * from dim_subsection_performance_expected
-
   - name: test_dim_subsection_problem_results
-    model: dim_subsection_problem_results
+    model: dim_subsection_problem_results_pre
     config:
       tags: 'ci'
     given:

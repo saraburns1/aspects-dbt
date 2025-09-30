@@ -155,6 +155,42 @@ models:
         data_type: String
         description: '{{ doc("block_id") }}'
 
+  - name: dim_subsection_problem_results_pre
+    columns:
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: success
+        data_type: Boolean
+        description: '{{ doc("success") }}'
+      - name: block_id_short
+        data_type: String
+        description: '{{ doc("block_id") }}'
+      - name: problem_location
+        data_type: String
+        description: '{{ doc("problem_location") }}'
+      - name: actor_id
+        data_type: String
+        description: '{{ doc("actor_id") }}'
+      - name: subsection_number
+        data_type: String
+        description: '{{ doc("subsection_number") }}'
+      - name: subsection_with_name
+        data_type: String
+        description: '{{ doc("subsection_with_name") }}'
+      - name: scaled_score
+        data_type: Float32
+        description: "A ratio between 0 and 1, inclusive, of the learner's grade"
+      - name: problem_name_location
+        data_type: String
+        description: '{{ doc("problem_name_location") }}'
+      - name: graded
+        data_type: Boolean
+        description: '{{ doc("graded") }}'
+
   - name: dim_subsection_problem_results
     columns:
       - name: org

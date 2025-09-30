@@ -37,6 +37,8 @@ with
             org,
             course_key,
             actor_id,
+            sum(pages_visited) as pages_visited,
+            sum(page_count) as page_count,
             case
                 when pages_visited = 0
                 then 'No pages viewed yet'
@@ -61,7 +63,6 @@ with
             org,
             course_key,
             actor_id,
-            section_subsection_page_engagement,
             section_subsection_name,
             section_with_name,
             content_level,
@@ -74,6 +75,7 @@ select
     content_level,
     actor_id,
     section_with_name,
-    block_id
+    block_id,
+    section_subsection_page_engagement
 from pageview_engagement
 where section_subsection_name <> ''
