@@ -44,7 +44,7 @@ models:
         description: '{{ doc("attempts") }}'
       - name: problem_id
         data_type: String
-        description: "The problem's unique identifier"
+        description: '{{ doc("problem_id") }}'
 
   - name: dim_learner_last_response
     description: "A record per course per problem per learner with their last attempt"
@@ -57,7 +57,7 @@ models:
         description: '{{ doc("course_key") }}'
       - name: problem_id
         data_type: String
-        description: "The problem's unique identifier"
+        description: '{{ doc("problem_id") }}'
       - name: display_name_with_location
         data_type: String
         description: "The block's display name with section, subsection, and unit prepended to the name. This provides additional context when looking at block names and can help data consumers understand which block they are analyzing"      
@@ -94,6 +94,9 @@ models:
       - name: subsection_block_id
         data_type: String
         description: '{{ doc("subsection_block_id") }}'
+      - name: emission_time
+        data_type: DateTime
+        description: '{{ doc("emission_time") }}'
 
   - name: dim_problem_responses
     columns:
@@ -190,6 +193,9 @@ models:
       - name: graded
         data_type: Boolean
         description: '{{ doc("graded") }}'
+      - name: problem_id
+        data_type: String
+        description: '{{ doc("problem_id") }}'
 
   - name: dim_subsection_problem_results
     columns:
@@ -223,6 +229,9 @@ models:
       - name: problem_name_location
         data_type: String
         description: '{{ doc("problem_name_location") }}'
+      - name: problem_id
+        data_type: String
+        description: '{{ doc("problem_id") }}'
 
   - name: fact_problem_engagement
     description: "A record per course per section and subsection per learner with engagement level"
@@ -298,7 +307,7 @@ models:
         description: '{{ doc("actor_id") }}'
       - name: problem_id
         data_type: String
-        description: "The problem's unique identifier"
+        description: '{{ doc("problem_id") }}'
       - name: avg_correct_attempts_coursewide
         data_type: Float32
         description: Avg number of correct attempts for the problem

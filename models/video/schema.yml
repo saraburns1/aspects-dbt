@@ -70,7 +70,12 @@ models:
       - name: video_link
         data_type: String
         description: "Link to the video within the course"
-
+      - name: section_with_name
+        data_type: String
+        description: '{{ doc("section_with_name") }}'
+      - name: subsection_with_name
+        data_type: String
+        description: '{{ doc("subsection_with_name") }}'
 
   - name: video_playback_events
     docs:
