@@ -45,12 +45,6 @@ models:
       - name: problem_id
         data_type: String
         description: "The problem's unique identifier"
-      - name: course_name
-        data_type: String
-        description: '{{ doc("course_name") }}'
-      - name: block_name
-        data_type: String
-        description: "The name of the block"
 
   - name: dim_learner_last_response
     description: "A record per course per problem per learner with their last attempt"
@@ -97,9 +91,9 @@ models:
       - name: scaled_score
         data_type: Float32
         description: "A ratio between 0 and 1, inclusive, of the learner's grade"
-      - name: emission_time
-        data_type: DateTime
-        description: "The timestamp of the last attempt"
+      - name: subsection_block_id
+        data_type: String
+        description: '{{ doc("subsection_block_id") }}'
 
   - name: dim_problem_responses
     columns:
@@ -124,12 +118,12 @@ models:
       - name: block_id_short
         data_type: String
         description: '{{ doc("block_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: '{{ doc("problem_name_location") }}'
       - name: response_count
         data_type: Int64
         description: "Count of each response per problem part"
@@ -151,12 +145,12 @@ models:
       - name: actor_id
         data_type: String
         description: '{{ doc("actor_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: '{{ doc("problem_name_location") }}'
       - name: block_id_short
         data_type: String
         description: '{{ doc("block_id") }}'
@@ -175,24 +169,24 @@ models:
       - name: block_id_short
         data_type: String
         description: '{{ doc("block_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: actor_id
         data_type: String
         description: '{{ doc("actor_id") }}'
       - name: subsection_number
         data_type: String
-        description: 'Subsection location in the format 1:2:0'
+        description: '{{ doc("subsection_number") }}'
       - name: subsection_with_name
         data_type: String
-        description: 'subsection_number followed by subsection name'
+        description: '{{ doc("subsection_with_name") }}'
       - name: scaled_score
         data_type: Float32
         description: "A ratio between 0 and 1, inclusive, of the learner's grade"
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: '{{ doc("problem_name_location") }}'
 
   - name: fact_problem_engagement
     description: "A record per course per section and subsection per learner with engagement level"
@@ -224,12 +218,69 @@ models:
       - name: block_id
         data_type: String
         description: '{{ doc("block_id") }}'
-      - name: username
+
+  - name: dim_subsection_performance
+    columns:
+      - name: org
         data_type: String
-        description: '{{ doc("username") }}'
-      - name: name
+        description: '{{ doc("org") }}'
+      - name: course_key
         data_type: String
-        description: '{{ doc("learner_name") }}'
-      - name: email
+        description: '{{ doc("course_key") }}'
+      - name: block_id
         data_type: String
-        description: '{{ doc("email") }}'
+        description: '{{ doc("block_id") }}'
+      - name: total_avg
+        data_type: Float32
+        description: Average scaled score per course/problem
+      - name: score_range
+        data_type: String
+        description: Score range
+      - name: score_range_count
+        data_type: Int32
+        description: Count of average scores in each range bucket
+
+  - name: dim_problem_coursewide_avg
+    columns:
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: course_order
+        data_type: String
+        description: '{{ doc("course_order") }}'
+      - name: problem_link
+        data_type: String
+        description: "An anchor tag with a link to the problem"
+      - name: graded
+        data_type: Boolean
+        description: '{{ doc("graded") }}'
+      - name: actor_id
+        data_type: String
+        description: '{{ doc("actor_id") }}'
+      - name: problem_id
+        data_type: String
+        description: "The problem's unique identifier"
+      - name: avg_correct_attempts_coursewide
+        data_type: Float32
+        description: Avg number of correct attempts for the problem
+      - name: avg_incorrect_attempts_coursewide
+        data_type: Float32
+        description: Avg number of incorrect attempts for the problem
+      - name: coursewide_percent_correct
+        data_type: Float32
+        description: Percent correct for the problem
+      - name: correct_attempts_by_learner
+        data_type: Int32
+        description: Total correct attempts per learner
+      - name: incorrect_attempts_by_learner
+        data_type: Int32
+        description: Total incorrect attempts per learner
+      - name: selected_learner_percent_correct
+        data_type: Float32
+        description: Percent correct per learner
+      - name: selected_learner_percent_incorrect
+        data_type: Float32
+        description: Percent incorrect per learner

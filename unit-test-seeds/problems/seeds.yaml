@@ -5,9 +5,6 @@ seeds:
     config:
       column_types:
         scaled_score: Float32
-        emission_time: DateTime64(6)
-        # use toTimeZone(emission_time, 'UTC') when populating seed file
-        # daylight savings time messes up a few records so those manually adjusted
   - name: dim_problem_responses_expected
     config:
       column_types:
@@ -16,3 +13,16 @@ seeds:
     config:
       column_types:
         scaled_score: Float32
+  - name: dim_problem_coursewide_avg_expected
+    config:
+      column_types:
+        selected_learner_percent_correct: Float32
+        selected_learner_percent_incorrect: Float32
+        avg_correct_attempts_coursewide: Float32
+        avg_incorrect_attempts_coursewide: Float32
+        coursewide_percent_correct: Float32
+  - name: dim_subsection_performance_expected
+    config: 
+      column_types:
+        score_range_count: UInt64
+        total_avg: Float32

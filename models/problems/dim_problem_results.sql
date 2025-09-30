@@ -2,7 +2,7 @@
     config(
         materialized="materialized_view",
         engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(course_key, block_id_short)",
+        primary_key="(course_key, block_id_short, actor_id)",
         order_by="(course_key, block_id_short, actor_id)",
     )
 }}
@@ -34,7 +34,7 @@ with
             first_success.actor_id as actor_id,
             splitByChar('@', events.problem_id)[3] as block_id_short,
             {{
-                format_problem_number_location(
+                format_problem_location(
                     "events.object_id", "blocks.display_name_with_location"
                 )
             }}
@@ -59,7 +59,7 @@ select distinct
     success,
     attempts,
     actor_id,
-    problem_number,
+    problem_location,
     problem_name_location,
     block_id_short
 from final_results

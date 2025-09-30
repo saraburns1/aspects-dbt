@@ -1,7 +1,12 @@
-with
-    pages_per_subsection as (
-        select * from ({{ items_per_subsection("%@vertical+block@%") }})
+{{
+    config(
+        materialized="materialized_view",
+        engine=get_engine("ReplacingMergeTree()"),
+        primary_key="(org, course_key, block_id, actor_id)",
+        order_by="(org, course_key, block_id, actor_id)",
     )
+}}
+
 select
     navigation.org as org,
     navigation.course_key as course_key,
@@ -11,7 +16,9 @@ select
     pages.item_count as page_count,
     pages.section_with_name as section_with_name,
     pages.subsection_with_name as subsection_with_name,
-    date(navigation.emission_time) as visited_on
+    date(navigation.emission_time) as visited_on,
+    pages.subsection_block_id as subsection_block_id,
+    pages.section_block_id as section_block_id
 from {{ ref("navigation_events") }} navigation
 join
     {{ ref("dim_course_blocks") }} blocks
@@ -20,10 +27,11 @@ join
         and navigation.block_id = blocks.block_id
     )
 join
-    pages_per_subsection pages
+    {{ ref("dim_items_per_subsection") }} pages
     on (
         pages.org = navigation.org
         and pages.course_key = navigation.course_key
         and pages.section_number = blocks.section_number
         and pages.subsection_number = blocks.subsection_number
     )
+where pages.block_type = 'vertical+block'
