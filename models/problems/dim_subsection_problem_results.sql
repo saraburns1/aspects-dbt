@@ -19,5 +19,5 @@ select
     subsection_number,
     subsection_with_name,
     scaled_score
-from {{ ref('dim_subsection_problem_results_pre') }}
+from {{ ref("dim_subsection_problem_results_pre") }}
 where graded
