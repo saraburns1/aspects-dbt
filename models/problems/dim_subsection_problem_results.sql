@@ -25,7 +25,7 @@ with
                 )
             }}  -- problem_location, problem_name_location
         from {{ ref("dim_learner_last_response") }}
-        where last_response.graded
+        where graded
     )
 select
     org,
