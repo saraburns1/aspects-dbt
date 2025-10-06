@@ -124,6 +124,10 @@ The section, subsection, unit, and part number of the problem block. In the form
 Boolean indicating whether the responses were correct
 {% enddocs %}
 
+{% docs problem_id %}
+Unique identifier for the problem
+{% enddocs %}
+
 {% docs object_tag_source %}
 Course objects and their associated tags from CMS events:  
 `COURSE_CREATED, XBLOCK_CREATED, LIBRARY_BLOCK_CREATED, CONTENT_OBJECT_ASSOCIATIONS_CHANGED`  

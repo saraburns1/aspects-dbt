@@ -2,8 +2,8 @@
     config(
         materialized="materialized_view",
         engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(course_key, block_id_short)",
-        order_by="(course_key, block_id_short, actor_id)",
+        primary_key="(course_key, block_id_short, actor_id, problem_id)",
+        order_by="(course_key, block_id_short, actor_id, problem_id)",
     )
 }}
 
@@ -56,6 +56,7 @@ select
     org,
     course_key,
     block_id_short,
+    problem_id,
     problem_number,
     problem_name_location,
     actor_id,
