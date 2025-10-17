@@ -13,5 +13,6 @@ unit_tests:
         rows: |
           select * from event_sink.external_id
     expect:
-      format: csv
-      fixture: user_pii_expected
+      format: sql
+      rows: |
+        select * from user_pii_expected
