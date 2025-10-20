@@ -2,7 +2,7 @@
     config(
         materialized="materialized_view",
         engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(course_key, block_id_short)",
+        primary_key="(course_key, block_id_short, response)",
         order_by="(course_key, block_id_short, response)",
     )
 }}

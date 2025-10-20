@@ -67,6 +67,12 @@ models:
       - name: visited_on
         data_type: Date
         description: '{{ doc("emission_time") }}'
+      - name: subsection_block_id
+        data_type: String
+        description: '{{ doc("subsection_block_id") }}'
+      - name: section_block_id
+        data_type: String
+        description: '{{ doc("section_block_id") }}'
 
   - name: fact_pageview_engagement
     description: "A view for analyzing the number of page views per learner per section and subsection"
