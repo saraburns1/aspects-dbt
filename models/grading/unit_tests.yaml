@@ -9,8 +9,9 @@ unit_tests:
         rows: |
           select * from grading_events
     expect:
-      format: csv
-      fixture: dim_learner_most_recent_course_grade_expected
+      format: sql
+      rows: |
+        select * from dim_learner_most_recent_course_grade_expected
 
   - name: test_dim_learner_most_recent_course_state
     model: dim_learner_most_recent_course_state
@@ -22,8 +23,9 @@ unit_tests:
         rows: |
           select * from grading_events
     expect:
-      format: csv
-      fixture: dim_learner_most_recent_course_state_expected
+      format: sql
+      rows: |
+        select * from dim_learner_most_recent_course_state_expected
 
   - name: test_dim_student_status
     model: dim_student_status

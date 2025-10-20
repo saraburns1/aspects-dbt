@@ -5,3 +5,7 @@ seeds:
     config:
       column_types:
         dump_id: UUID
+  - name: dim_course_names_expected
+    config:
+      column_types:
+        tags_str: String
