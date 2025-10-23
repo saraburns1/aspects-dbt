@@ -274,6 +274,18 @@ models:
         description: '{{ doc("course_key") }}'
       - name: block_id
         data_type: String
+        description: '{{ doc("email") }}'
+
+  - name: dim_subsection_performance
+    columns:
+      - name: org
+        data_type: String
+        description: '{{ doc("org") }}'
+      - name: course_key
+        data_type: String
+        description: '{{ doc("course_key") }}'
+      - name: block_id
+        data_type: String
         description: '{{ doc("block_id") }}'
       - name: total_avg
         data_type: Float32

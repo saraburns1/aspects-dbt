@@ -19,8 +19,8 @@ with
             count(block_id) as pages_visited,
             section_with_name,
             subsection_with_name,
-            subsection_block_id,  -- used for primary key
-            section_block_id  -- used for primary key
+            subsection_block_id,
+            section_block_id
         from {{ ref("fact_navigation_completion") }}
         group by
             org,
