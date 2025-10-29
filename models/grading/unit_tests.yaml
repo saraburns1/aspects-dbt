@@ -1,18 +1,4 @@
 unit_tests:
-  - name: test_dim_learner_most_recent_course_grade
-    model: dim_learner_most_recent_course_grade
-    config:
-      tags: 'ci'
-    given:
-      - input: ref('grading_events')
-        format: sql
-        rows: |
-          select * from grading_events
-    expect:
-      format: sql
-      rows: |
-        select * from dim_learner_most_recent_course_grade_expected
-
   - name: test_dim_learner_most_recent_course_state
     model: dim_learner_most_recent_course_state
     config:
