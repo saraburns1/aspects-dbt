@@ -26,18 +26,10 @@ unit_tests:
         format: sql
         rows: |
           select * from dim_learner_most_recent_course_state
-      - input: ref('dim_learner_most_recent_course_grade')
+      - input: ref('navigation_events')
         format: sql
         rows: |
-          select * from dim_learner_most_recent_course_grade
-      - input: ref('dim_course_names')
-        format: sql
-        rows: |
-          select * from dim_course_names
-      - input: ref('dim_user_pii')
-        format: sql
-        rows: |
-          select * from dim_user_pii
+          select * from navigation_events
     expect:
       format: sql
       rows: |
