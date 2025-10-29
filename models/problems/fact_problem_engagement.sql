@@ -1,3 +1,12 @@
+{{
+    config(
+        materialized="materialized_view",
+        engine=get_engine("ReplacingMergeTree()"),
+        order_by="(org, course_key, block_id, actor_id)",
+        primary_key="(org, course_key, block_id, actor_id)",
+    )
+}}
+
 with
     get_problem_data as (
         select
@@ -95,16 +104,6 @@ select
     problem_engagement.actor_id as actor_id,
     problem_engagement.section_subsection_problem_engagement
     as section_subsection_problem_engagement,
-    problem_engagement.block_id as block_id,
-    users.username as username,
-    users.name as name,
-    users.email as email
+    problem_engagement.block_id as block_id
 from problem_engagement
-left join
-    {{ ref("dim_user_pii") }} users
-    on (
-        problem_engagement.actor_id like 'mailto:%'
-        and SUBSTRING(problem_engagement.actor_id, 8) = users.email
-    )
-    or problem_engagement.actor_id = toString(users.external_user_id)
 where section_subsection_name <> ''

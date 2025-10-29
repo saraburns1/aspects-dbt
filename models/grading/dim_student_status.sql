@@ -9,23 +9,23 @@ select
     enrollment.enrollment_status as enrollment_status,
     state.course_grade as course_grade,
     case
-        when course_grade >= 0.9
+        when state.course_grade >= 0.9
         then '90-100%'
-        when course_grade >= 0.8
+        when state.course_grade >= 0.8
         then '80-89%'
-        when course_grade >= 0.7
+        when state.course_grade >= 0.7
         then '70-79%'
-        when course_grade >= 0.6
+        when state.course_grade >= 0.6
         then '60-69%'
-        when course_grade >= 0.5
+        when state.course_grade >= 0.5
         then '50-59%'
-        when course_grade >= 0.4
+        when state.course_grade >= 0.4
         then '40-49%'
-        when course_grade >= 0.3
+        when state.course_grade >= 0.3
         then '30-39%'
-        when course_grade >= 0.2
+        when state.course_grade >= 0.2
         then '20-29%'
-        when course_grade >= 0.1
+        when state.course_grade >= 0.1
         then '10-19%'
         else '0-9%'
     end as grade_bucket,

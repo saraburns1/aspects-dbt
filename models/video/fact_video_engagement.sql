@@ -2,8 +2,8 @@
     config(
         materialized="materialized_view",
         engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(org, course_key, actor_id, block_id, section_subsection_video_engagement)",
-        order_by="(org, course_key, actor_id, block_id, section_subsection_video_engagement)",
+        primary_key="(org, course_key, actor_id, block_id)",
+        order_by="(org, course_key, actor_id, block_id)",
     )
 }}
 
@@ -90,29 +90,14 @@ with
             ) as content_level
         group by
             org, course_key, actor_id, block_id, section_subsection_name, content_level
-    ),
-    final_results as (
-        select
-            video_engagment.org as org,
-            video_engagment.course_key as course_key,
-            video_engagment.section_subsection_name as section_subsection_name,
-            video_engagment.content_level as content_level,
-            video_engagment.actor_id as actor_id,
-            video_engagment.section_subsection_video_engagement
-            as section_subsection_video_engagement,
-            video_engagment.block_id as block_id,
-            users.username as username,
-            users.name as name,
-            users.email as email
-        from video_engagment
-        left outer join
-            {{ ref("dim_user_pii") }} users
-            on (
-                video_engagment.actor_id like 'mailto:%'
-                and SUBSTRING(video_engagment.actor_id, 8) = users.email
-            )
-            or video_engagment.actor_id = toString(users.external_user_id)
-        where section_subsection_name <> ''
     )
-select *
-from final_results
+select
+    org,
+    course_key,
+    section_subsection_name,
+    content_level,
+    actor_id,
+    section_subsection_video_engagement,
+    block_id
+from video_engagment
+where section_subsection_name <> ''
