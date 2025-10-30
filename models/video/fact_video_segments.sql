@@ -113,7 +113,7 @@ select
     video_duration,
     watched_segment,
     watch_count,
-    object_location as video_location,
+    object_location as video_number,
     object_name_location as video_name_location,
     video_link,
     section_with_name,
