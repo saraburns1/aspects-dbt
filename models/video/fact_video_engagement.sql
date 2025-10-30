@@ -24,7 +24,7 @@ with
                 and splitByString('/xblock/', segments.object_id)[-1] = blocks.block_id
             )
         group by org, course_key, section_number, subsection_number, actor_id
-    ),
+    ),    
     fact_videos_per_subsection as (
         select * from ({{ items_per_subsection("%@video+block@%") }})
     ),
@@ -32,7 +32,6 @@ with
         select
             videos.org as org,
             videos.course_key as course_key,
-            videos.subsection_course_order as course_order,
             plays.actor_id as actor_id,
             'section' as section_content_level,
             'subsection' as subsection_content_level,
@@ -54,7 +53,6 @@ with
         group by
             org,
             course_key,
-            course_order,
             actor_id,
             item_count,
             section_block_id,
