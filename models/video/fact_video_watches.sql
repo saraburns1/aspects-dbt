@@ -53,7 +53,7 @@ with
         select
             aggregate.org,
             aggregate.course_key,
-            {{ format_object_location(blocks.display_name_with_location) }}, -- object_location, object_name_location
+            {{ format_object_location('blocks.display_name_with_location') }}, -- object_location, object_name_location
             aggregate.actor_id,
             aggregate.video_watched_count,
             aggregate.video_rewatched_count,

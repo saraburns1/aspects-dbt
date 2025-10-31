@@ -21,8 +21,7 @@ with
             if(
                 verb_id = 'https://w3id.org/xapi/video/verbs/played', 'start', 'end'
             ) as verb
-        from xapi.video_playback_events
-        -- from {{ ref("video_playback_events") }}
+        from {{ ref("video_playback_events") }}
         where verb_id <> 'http://adlnet.gov/expapi/verbs/initialized'
     ),
     matches as (
