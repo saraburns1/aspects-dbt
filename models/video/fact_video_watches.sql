@@ -15,7 +15,7 @@ with
             actor_id,
             block_id,
             object_id,
-            segment_start,
+            watched_segment,
             sum(watch_count) as watched_count,
             video_duration
         from {{ ref('fact_video_segments') }}
@@ -36,7 +36,7 @@ with
             video_duration,
             object_id,
             block_id,
-            count(segment_start) as _total_segments_watched,
+            count(watched_segment) as _total_segments_watched,
             max(watched_count) as video_watched_count,
             max(
                 case when watched_count > 1 then watched_count else 0 end
