@@ -36,7 +36,6 @@
         ("view", reporting, "learner_summary"),
         ("view", reporting, "fact_navigation_dropoff"),
         ("view", reporting, "fact_learner_problem_summary"),
-        ("view", reporting, "fact_problem_engagement"),
         ("view", reporting, "fact_problem_engagement_per_subsection"),
         ("view", reporting, "fact_problem_responses_extended"),
         ("view", reporting, "dim_at_risk_learners"),

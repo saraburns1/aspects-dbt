@@ -31,7 +31,7 @@ with
                 subsection_number, ' - ', _subsection_with_name[2]
             ) as subsection_with_name,
             {{
-                format_problem_number_location(
+                format_problem_location(
                     "last_response.object_id",
                     "last_response.display_name_with_location",
                 )
@@ -57,7 +57,7 @@ select
     course_key,
     block_id_short,
     problem_id,
-    problem_number,
+    problem_location,
     problem_name_location,
     actor_id,
     success,

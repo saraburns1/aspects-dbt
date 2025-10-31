@@ -124,12 +124,12 @@ models:
       - name: block_id_short
         data_type: String
         description: '{{ doc("block_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: "problem_location followed by the name of the problem"
       - name: response_count
         data_type: Int64
         description: "Count of each response per problem part"
@@ -151,12 +151,12 @@ models:
       - name: actor_id
         data_type: String
         description: '{{ doc("actor_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: "problem_location followed by the name of the problem"
       - name: block_id_short
         data_type: String
         description: '{{ doc("block_id") }}'
@@ -178,9 +178,9 @@ models:
       - name: problem_id
         data_type: String
         description: '{{ doc("problem_id") }}'
-      - name: problem_number
+      - name: problem_location
         data_type: String
-        description: '{{ doc("problem_number") }}'
+        description: '{{ doc("problem_location") }}'
       - name: actor_id
         data_type: String
         description: '{{ doc("actor_id") }}'
@@ -195,7 +195,7 @@ models:
         description: "A ratio between 0 and 1, inclusive, of the learner's grade"
       - name: problem_name_location
         data_type: String
-        description: "problem_number followed by the name of the problem"
+        description: "problem_location followed by the name of the problem"
 
   - name: fact_problem_engagement
     description: "A record per course per section and subsection per learner with engagement level"

@@ -21,7 +21,8 @@ with
             if(
                 verb_id = 'https://w3id.org/xapi/video/verbs/played', 'start', 'end'
             ) as verb
-        from {{ ref("video_playback_events") }}
+        from xapi.video_playback_events
+        -- from {{ ref("video_playback_events") }}
         where verb_id <> 'http://adlnet.gov/expapi/verbs/initialized'
     ),
     matches as (
@@ -65,57 +66,22 @@ with
         from starts
         inner join ends on starts.end_id = ends.event_id
         where ends.video_position > starts.video_position
-    ),
-    final_results as (
-        select
-            joined.org,
-            joined.course_key,
-            joined.actor_id,
-            joined.object_id,
-            joined.video_duration,
-            joined.watched_segment,
-            count(1) as watch_count,
-            {{ format_object_location("blocks.display_name_with_location") }},  -- object_number, object_name_location
-            concat(
-                '<a href="',
-                joined.object_id,
-                '" target="_blank">',
-                object_name_location,
-                '</a>'
-            ) as video_link,
-            blocks.section_with_name as section_with_name,
-            blocks.subsection_with_name as subsection_with_name
-        from joined
-        join
-            {{ ref("dim_course_blocks") }} blocks
-            on (
-                joined.course_key = blocks.course_key
-                and splitByString('/xblock/', joined.object_id)[-1] = blocks.block_id
-            )
-        group by
-            org,
-            course_key,
-            actor_id,
-            object_id,
-            video_duration,
-            watched_segment,
-            object_location,
-            object_name_location,
-            video_link,
-            section_with_name,
-            subsection_with_name
     )
 select
     org,
     course_key,
     actor_id,
     object_id,
+    splitByChar('@', splitByString('/xblock/', object_id)[-1])[3] as block_id,
     video_duration,
     watched_segment,
-    watch_count,
-    object_location as video_location,
-    object_name_location as video_name_location,
-    video_link,
-    section_with_name,
-    subsection_with_name
-from final_results
+    count(1) as watch_count
+from joined
+group by
+    org,
+    course_key,
+    actor_id,
+    object_id,
+    block_id,
+    video_duration,
+    watched_segment
