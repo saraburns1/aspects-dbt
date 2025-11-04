@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
-        order_by="(org, course_key, block_id, actor_id)",
-        primary_key="(org, course_key, block_id, actor_id)",
-    )
-}}
-
 with
     get_problem_data as (
         select

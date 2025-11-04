@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
-        order_by="(org, course_key, problem_id, actor_id)",
-        primary_key="(org, course_key, problem_id, actor_id)",
-    )
-}}
-
 with
     last_response as (
         select

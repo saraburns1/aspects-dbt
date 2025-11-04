@@ -3,7 +3,7 @@ version: 2
 models:
   - name: problem_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "Problem events"
     columns:
       - name: event_id

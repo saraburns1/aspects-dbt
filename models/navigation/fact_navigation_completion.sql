@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(org, course_key, block_id, actor_id)",
-        order_by="(org, course_key, block_id, actor_id)",
-    )
-}}
-
 with
     pages_per_subsection as (
         select * from ({{ items_per_subsection("%@vertical+block@%") }})

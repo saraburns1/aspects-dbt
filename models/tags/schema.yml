@@ -2,6 +2,8 @@ version: 2
 
 models:
   - name: dim_most_recent_course_tags
+    docs:
+        node_color: '{{ var("color_dict") }}'
     description: "Tag with lineage data for objects (view)"
     columns:
       - name: course_key
@@ -24,8 +26,6 @@ models:
         description: "The name of the parent taxonomy of the tag"
 
   - name: dim_most_recent_object_tags
-    docs:
-        node_color: '{{ var("color_event_sink") }}'
     description: "Latest object tags"
     columns:
       - name: id
@@ -48,8 +48,6 @@ models:
         description: "Lineage data of the tag for parent tags"
 
   - name: dim_most_recent_tags
-    docs:
-        node_color: '{{ var("color_event_sink") }}'
     description: "Latest tags"
     columns:
       - name: id
@@ -72,8 +70,6 @@ models:
         description: "Lineage data of the tag for parent tags"
 
   - name: dim_most_recent_taxonomies
-    docs:
-        node_color: '{{ var("color_event_sink") }}'
     description: "Latest taxonomies"
     columns:
       - name: id

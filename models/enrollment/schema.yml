@@ -43,7 +43,7 @@ models:
 
   - name: enrollment_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view for xAPI events related to course enrollment"
     columns:
       - name: event_id

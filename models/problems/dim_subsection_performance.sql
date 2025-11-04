@@ -1,12 +1,3 @@
-{{
-    config(
-        materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(org, course_key, block_id, score_range)",
-        order_by="(org, course_key, block_id, score_range)",
-    )
-}}
-
 with
     avg_actor as (
         select org, course_key, block_id_short, avg(scaled_score) as avg_score, actor_id

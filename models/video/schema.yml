@@ -2,6 +2,8 @@ version: 2
 
 models:
   - name: fact_video_engagement
+    docs:
+        node_color: '{{ var("color_mv") }}'
     description: "A dataset with one record representing the engagement of a learner with a video"
     columns:
       - name: org
@@ -38,6 +40,8 @@ models:
         description: '{{ doc("block_id") }}'
 
   - name: fact_video_segments
+    docs:
+        node_color: '{{ var("color_mv") }}'
     description: "Each second of every video that has been watched"
     columns:
       - name: org
@@ -67,7 +71,7 @@ models:
 
   - name: video_playback_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "Events related to video playback"
     columns:
       - name: event_id
@@ -102,6 +106,8 @@ models:
         description: "The duration of the video in seconds"
 
   - name: fact_video_watches
+    docs:
+        node_color: '{{ var("color_mv") }}'
     columns:
       - name: org
         data_type: string

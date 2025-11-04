@@ -1,13 +1,3 @@
-{{
-    config(
-        materialized="materialized_view",
-        schema=env_var("ASPECTS_EVENT_SINK_DATABASE", "event_sink"),
-        engine=get_engine("ReplacingMergeTree()"),
-        order_by="(location)",
-        post_hook="OPTIMIZE TABLE {{ this }} {{ on_cluster() }} FINAL",
-    )
-}}
-
 select
     location,
     display_name as block_name,

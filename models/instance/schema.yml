@@ -3,7 +3,7 @@ version: 2
 models:
   - name: fact_instance_courses
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view summarizing site-wide course activity"
     columns:
       - name: emission_hour
@@ -15,7 +15,7 @@ models:
 
   - name: fact_instance_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view summarizing site-wide xAPI event activity"
     columns:
       - name: emission_day
@@ -27,7 +27,7 @@ models:
 
   - name: fact_instance_actors
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view summarizing site-wide user activity"
     columns:
       - name: emission_day
@@ -38,6 +38,8 @@ models:
         description: "The number of xAPI actors active in the given hour"
 
   - name: fact_instance_enrollments
+    docs:
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view for summarizing site-wide enrollment activity"
     columns:
       - name: emission_day

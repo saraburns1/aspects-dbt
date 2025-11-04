@@ -3,7 +3,7 @@ version: 2
 models:
   - name: navigation_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "A materialized view for xAPI events related to course navigation"
     columns:
       - name: event_id
@@ -104,19 +104,3 @@ models:
       - name: block_id
         data_type: String
         description: '{{ doc("block_id") }}'
-
-  - name: dim_learner_last_course_visit
-    description: "A materialized view that stores a learners last navigation event timestamp for a course"
-    columns:
-      - name: org
-        data_type: String
-        description: '{{ doc("org") }}'
-      - name: course_key
-        data_type: String
-        description: '{{ doc("course_key") }}'
-      - name: actor_id
-        data_type: String
-        description: '{{ doc("actor_id") }}'
-      - name: emission_time
-        data_type: DateTime
-        description: '{{ doc("emission_time") }}'

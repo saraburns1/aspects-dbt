@@ -28,7 +28,7 @@ models:
 
   - name: grading_events
     docs:
-        node_color: '{{ var("color_xapi") }}'
+        node_color: '{{ var("color_mv") }}'
     description: "Events related to grading"
     columns:
       - name: event_id

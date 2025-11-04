@@ -2,6 +2,8 @@ version: 2
 
 models:  
   - name: dim_course_blocks
+    docs:
+        node_color: '{{ var("color_mv") }}'
     description: "A denormalized table of course block information. This should be preferred over dim_course_blocks_extended when section and subsection names are not necessary to include in a model"
     columns:
       - name: org
@@ -57,6 +59,8 @@ models:
         description: "The name of the subsection"
 
   - name: dim_course_block_names
+    docs:
+        node_color: '{{ var("color_dict") }}'
     description: "An in-memory dictionary of course blocks with their display names and additional metadata. Only stores the most recent row per block location."
     columns:
       - name: location
@@ -79,8 +83,6 @@ models:
         description: '{{ doc("course_order") }}'
 
   - name: dim_most_recent_course_blocks
-    docs:
-        node_color: '{{ var("color_event_sink") }}'
     description: "A materialized view of course blocks with their display names and additional metadata. Only stores the most recent row per block location."
     columns:
       - name: location
@@ -119,7 +121,7 @@ models:
     
   - name: dim_course_names
     docs:
-        node_color: '{{ var("color_event_sink") }}'
+        node_color: '{{ var("color_dict") }}'
     description: "A dictionary of courses with their names"
     columns:
       - name: course_key
