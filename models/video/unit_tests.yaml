@@ -4,10 +4,10 @@ unit_tests:
     config:
       tags: 'ci'
     given:
-      - input: ref('fact_video_segments')
+      - input: ref('fact_video_watches')
         format: sql
         rows: |
-          select * from fact_video_segments
+          select * from fact_video_watches
       - input: ref('dim_course_blocks')
         format: sql
         rows: |

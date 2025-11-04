@@ -107,3 +107,41 @@ models:
         data_type: int64
         description: "The duration of the video in seconds"
 
+  - name: fact_video_watches
+    columns:
+      - name: org
+        data_type: string
+        description: '{{ doc("org") }}'
+      - name: course_key
+        data_type: string
+        description: '{{ doc("course_key") }}'
+      - name: video_location
+        data_type: string
+        description: 'Location of the video in format section:subsection:unit'
+      - name: video_name_location
+        data_type: string
+        description: 'Name and location of the video in format name - section:subsection:unit'
+      - name: actor_id
+        data_type: string
+        description: '{{ doc("actor_id") }}'
+      - name: video_watched_count
+        data_type: int32
+        description: 'Number of times the video was watched'
+      - name: video_rewatched_count
+        data_type: int32
+        description: 'Number of times the video was rewatched'
+      - name: watched_entire_video
+        data_type: boolean
+        description: 'If the entire video (95%) was watched'
+      - name: video_link
+        data_type: String
+        description: 'Link to video within the course'
+      - name: section_with_name
+        data_type: String
+        description: '{{ doc("section_with_name") }}'
+      - name: subsection_with_name
+        data_type: String
+        description: '{{ doc("subsection_with_name") }}'
+      - name: block_id
+        data_type: String
+        description: '{{ doc("block_id") }}'

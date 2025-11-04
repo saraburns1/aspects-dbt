@@ -71,7 +71,7 @@ select
     course_key,
     actor_id,
     object_id,
-    splitByChar('@', splitByString('/xblock/', object_id)[-1])[3] as block_id,
+    splitByString('/xblock/', object_id)[-1] as block_id,
     video_duration,
     watched_segment,
     count(1) as watch_count
