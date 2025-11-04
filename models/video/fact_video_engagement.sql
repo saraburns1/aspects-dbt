@@ -24,7 +24,7 @@ with
                 and watches.block_id = blocks.block_id
             )
         group by org, course_key, section_number, subsection_number, actor_id
-    ),    
+    ),
     fact_videos_per_subsection as (
         select * from ({{ items_per_subsection("%@video+block@%") }})
     ),

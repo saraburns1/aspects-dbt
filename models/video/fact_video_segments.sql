@@ -76,11 +76,4 @@ select
     watched_segment,
     count(1) as watch_count
 from joined
-group by
-    org,
-    course_key,
-    actor_id,
-    object_id,
-    block_id,
-    video_duration,
-    watched_segment
+group by org, course_key, actor_id, object_id, block_id, video_duration, watched_segment

@@ -36,15 +36,6 @@ models:
       - name: block_id
         data_type: String
         description: '{{ doc("block_id") }}'
-      - name: username
-        data_type: String
-        description: '{{ doc("username") }}'
-      - name: name
-        data_type: String
-        description: '{{ doc("learner_name") }}'
-      - name: email
-        data_type: String
-        description: '{{ doc("email") }}'
 
   - name: fact_video_segments
     description: "Each second of every video that has been watched"
@@ -61,6 +52,9 @@ models:
       - name: object_id
         data_type: string
         description: '{{ doc("object_id") }}'
+      - name: block_id
+        data_type: string
+        description: '{{ doc("block_id") }}'
       - name: video_duration
         data_type: Int32
         description: "Total duration of the video"

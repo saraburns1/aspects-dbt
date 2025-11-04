@@ -18,7 +18,7 @@ with
             watched_segment,
             sum(watch_count) as watched_count,
             video_duration
-        from {{ ref('fact_video_segments') }}
+        from {{ ref("fact_video_segments") }}
         group by
             org,
             course_key,
@@ -42,22 +42,18 @@ with
                 case when watched_count > 1 then watched_count else 0 end
             ) as video_rewatched_count
         from watched_video_segments
-        group by
-            org,
-            course_key,
-            object_id,
-            block_id,
-            actor_id,
-            video_duration
-    ), final_results as (
+        group by org, course_key, object_id, block_id, actor_id, video_duration
+    ),
+    final_results as (
         select
             aggregate.org,
             aggregate.course_key,
-            {{ format_object_location('blocks.display_name_with_location') }}, -- object_location, object_name_location
+            {{ format_object_location("blocks.display_name_with_location") }},  -- object_location, object_name_location
             aggregate.actor_id,
             aggregate.video_watched_count,
             aggregate.video_rewatched_count,
-            aggregate._total_segments_watched / aggregate.video_duration >= .95 as watched_entire_video,
+            aggregate._total_segments_watched / aggregate.video_duration
+            >= .95 as watched_entire_video,
             concat(
                 '<a href="',
                 aggregate.object_id,
@@ -70,23 +66,23 @@ with
             aggregate.block_id as block_id
         from aggregate
         join
-            {{ ref('dim_course_blocks') }} blocks
+            {{ ref("dim_course_blocks") }} blocks
             on (
                 aggregate.course_key = blocks.course_key
                 and aggregate.block_id = blocks.block_id
             )
     )
-    select 
-        org,
-        course_key,
-        object_location as video_location,
-        object_name_location as video_name_location,
-        actor_id,
-        video_watched_count,
-        video_rewatched_count,
-        watched_entire_video,
-        video_link,
-        section_with_name,
-        subsection_with_name,
-        block_id
-    from final_results
+select
+    org,
+    course_key,
+    object_location as video_location,
+    object_name_location as video_name_location,
+    actor_id,
+    video_watched_count,
+    video_rewatched_count,
+    watched_entire_video,
+    video_link,
+    section_with_name,
+    subsection_with_name,
+    block_id
+from final_results

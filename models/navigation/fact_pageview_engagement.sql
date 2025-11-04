@@ -68,7 +68,7 @@ with
             content_level,
             block_id
     )
-select    
+select
     org,
     course_key,
     section_subsection_name,
