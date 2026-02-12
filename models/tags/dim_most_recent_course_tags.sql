@@ -32,7 +32,7 @@ select
     most_recent_tags.value as tag,
     parsed_tags.course_name as course_name,
     most_recent_taxonomies.name as taxonomy_name,
-    most_recent_taxonomies.lineage as lineage,
+    most_recent_tags.lineage as lineage,
     parsed_tags.tag_id as tag_id
 from parsed_tags
 inner join
