@@ -22,7 +22,7 @@
 with
     latest as (
         select org, course_key, max(modified) as last_modified
-        from {{ source("event_sink", "course_overviews") }}
+        from {{ ref("course_overviews") }}
         group by org, course_key
     )
 select
@@ -31,7 +31,7 @@ select
     splitByString('+', course_key)[-1] as course_run,
     org,
     JSONExtract(course_data_json, 'tags', 'String') as tags_str
-from {{ source("event_sink", "course_overviews") }} co
+from {{ ref("course_overviews") }} co
 inner join
     latest mr
     on mr.org = co.org

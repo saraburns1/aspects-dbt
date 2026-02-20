@@ -22,7 +22,7 @@
 with
     most_recent_user_profile as (
         select user_id, max(time_last_dumped) as time_last_dumped
-        from {{ source("event_sink", "user_profile") }}
+        from {{ ref("user_profile") }}
         group by user_id
     )
 select
@@ -37,8 +37,8 @@ select
     up.email as email
 from most_recent_user_profile mrup
 left outer join
-    {{ source("event_sink", "external_id") }} ex on mrup.user_id = ex.user_id
+    {{ ref("external_id") }} ex on mrup.user_id = ex.user_id
 left outer join
-    {{ source("event_sink", "user_profile") }} up
+    {{ ref("user_profile") }} up
     on up.user_id = mrup.user_id
     and up.time_last_dumped = mrup.time_last_dumped
