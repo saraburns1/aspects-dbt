@@ -11,23 +11,23 @@ select
     most_recent_enrollment.enrollment_status as enrollment_status,
     course_grade.course_grade as course_grade,
     case
-        when toDecimal32(course_grade.course_grade, 1) in (0.9, 1.0)
+        when course_grade.course_grade >= 0.9
         then '90-100%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.8
+        when course_grade.course_grade >= 0.8
         then '80-89%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.7
+        when course_grade.course_grade >= 0.7
         then '70-79%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.6
+        when course_grade.course_grade >= 0.6
         then '60-69%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.5
+        when course_grade.course_grade >= 0.5
         then '50-59%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.4
+        when course_grade.course_grade >= 0.4
         then '40-49%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.3
+        when course_grade.course_grade >= 0.3
         then '30-39%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.2
+        when course_grade.course_grade >= 0.2
         then '20-29%'
-        when toDecimal32(course_grade.course_grade, 1) = 0.1
+        when course_grade.course_grade >= 0.1
         then '10-19%'
         else '0-9%'
     end as grade_bucket,
