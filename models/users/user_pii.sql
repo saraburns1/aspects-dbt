@@ -36,8 +36,7 @@ select
     up.name as name,
     up.email as email
 from most_recent_user_profile mrup
-left outer join
-    {{ ref("external_id") }} ex on mrup.user_id = ex.user_id
+left outer join {{ ref("external_id") }} ex on mrup.user_id = ex.user_id
 left outer join
     {{ ref("user_profile") }} up
     on up.user_id = mrup.user_id
