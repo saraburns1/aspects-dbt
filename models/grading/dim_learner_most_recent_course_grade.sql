@@ -1,7 +1,7 @@
 {{
     config(
         materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
+        engine=get_engine("ReplacingMergeTree(emission_time)"),
         primary_key="(org, course_key, actor_id)",
         order_by="(org, course_key, actor_id)",
     )
