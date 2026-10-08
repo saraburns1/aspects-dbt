@@ -1,7 +1,10 @@
 {{
     config(
         materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
+        refreshable={
+            "interval": env_var("ASPECTS_REFRESHABLE_MV_INTERVAL", "EVERY 1 HOUR")
+        },
+        engine=get_engine("MergeTree()"),
         order_by="(org, course_key, problem_id, actor_id)",
         primary_key="(org, course_key, problem_id, actor_id)",
     )
@@ -20,6 +23,8 @@ with
             case when success then attempts else 0 end as success_attempt,
             case when not success then attempts else 0 end as incorrect_attempt
         from {{ ref("dim_learner_last_response") }}
+        order by emission_time desc
+        limit 1 by org, course_key, problem_id, actor_id
     ),
     coursewide_attempts as (
         select

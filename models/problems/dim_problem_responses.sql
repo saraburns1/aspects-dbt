@@ -1,59 +1,24 @@
-{{
-    config(
-        materialized="materialized_view",
-        engine=get_engine("ReplacingMergeTree()"),
-        primary_key="(course_key, block_id_short, response)",
-        order_by="(course_key, block_id_short, response)",
-    )
-}}
-
 with
-    first_response as (
-        select
-            org,
-            course_key,
-            object_id,
-            problem_id,
-            actor_id,
-            interaction_type,
-            argMin(success, attempts) as success,
-            argMin(emission_time, attempts) as emission_time,
-            argMin(responses, attempts) as responses,
-            argMin(scaled_score, attempts) as scaled_score
-        from {{ ref("problem_events") }}
-        where verb_id = 'https://w3id.org/xapi/acrossx/verbs/evaluated'
-        group by org, course_key, object_id, problem_id, actor_id, interaction_type
-    ),
     final_results as (
         select
-            first_response.org as org,
-            first_response.course_key as course_key,
-            first_response.emission_time as emission_time,
-            splitByChar('@', first_response.problem_id)[3] as block_id_short,
-            replaceRegexpAll(
-                first_response.responses,
-                '<.*?hint.*?<\/.*?hint>|</div>|<div>|\[|\]',
-                ''
-            ) as _response1,
-            replaceRegexpAll(_response1, '",(\s|)"', ',') as _response2,
-            case
-                when first_response.responses like '[%'
-                then arrayJoin(splitByChar(',', replaceAll(_response2, '"', '')))
-                else _response2
-            end as response,
-            first_response.success as success,
-            first_response.interaction_type as interaction_type,
+            counts.org as org,
+            counts.course_key as course_key,
+            splitByChar('@', counts.problem_id)[3] as block_id_short,
+            counts.response as response,
+            counts.success as success,
+            counts.interaction_type as interaction_type,
+            counts.learners as learners,
             {{
                 format_problem_number_location(
-                    "first_response.object_id", "blocks.display_name_with_location"
+                    "counts.object_id", "blocks.display_name_with_location"
                 )
             }}
-        from first_response
+        from {{ ref("fact_problem_response_counts") }} counts
         left join
             {{ ref("dim_course_blocks") }} blocks
             on (
-                first_response.course_key = blocks.course_key
-                and first_response.problem_id = blocks.block_id
+                counts.course_key = blocks.course_key
+                and counts.problem_id = blocks.block_id
             )
     )
 select
@@ -65,7 +30,7 @@ select
     interaction_type,
     problem_number,
     problem_name_location,
-    count(1) as response_count
+    uniqExactMerge(learners) as response_count
 from final_results
 group by
     org,
